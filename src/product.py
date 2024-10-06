@@ -10,5 +10,29 @@ class Product:
         """Функция инициализации"""
         self.name = name
         self.description = description
-        self.price = price
+        self.__price = price
         self.quantity = quantity
+
+    @classmethod
+    def new_product(cls, info):
+        name = info['name']
+        description = info['description']
+        price = info['price']
+        quantity = info['quantity']
+        return cls(name, description, price, quantity)
+
+    @property
+    def price(self):
+        return self.__price
+
+    @price.setter
+    def price(self, new_price: float):
+        if new_price <= 0:
+            print("Цена не должна быть нулевая или отрицательная")
+        elif new_price < self.__price:
+            user_input = input("Вы уверенны? если да нажмите y")
+            if user_input.lower() == 'y':
+                self.__price = new_price
+        else:
+            self.__price = new_price
+
